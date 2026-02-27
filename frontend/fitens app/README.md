@@ -1,16 +1,52 @@
-# React + Vite
+# Fitens App 🏋️‍♂️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Fitens to aplikacja webowa pozwalająca:
 
-Currently, two official plugins are available:
+- 🧮 **obliczyć swoje BMI** (Body Mass Index) na podstawie wzrostu i wagi
+- 🤖 **wygenerować plan treningowy** dostosowany do Twoich indywidualnych potrzeb dzięki sztucznej inteligencji
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Projekt powstał jako współpraca frontend/backendu i jest przykładem nowoczesnej aplikacji React + Vite.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Funkcjonalności
 
-## Expanding the ESLint configuration
+1. **Kalkulator BMI**
+   - Wprowadź swoje dane i sprawdź, w jakiej kategorii się znajdujesz (niedowaga/normalna waga/nadwaga/otyłość).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. **Plan treningowy generowany przez AI**
+   - Podaj cele, poziom zaawansowania i preferencje ćwiczeń, a system zaproponuje plan treningowy.
+
+3. **Responsywny interfejs**
+   - Aplikacja działa na telefonach, tabletach i komputerach.
+
+4. **Łatwe rozszerzanie**
+   - Backend jest przygotowany na przyszłe integracje (np. logowanie użytkownika, statystyki). 
+
+---
+
+## 🛠️ Technologie
+
+- **Frontend:** React, Vite, CSS moduły
+- **Backend:** (współtworzony przez Kubę Pławeckiego)
+- **AI:** Model generujący plany treningowe
+
+---
+
+## 👥 Autorzy
+
+- Frontend: **Damian Bukowiec**
+- Backend & logika AI: **Kuba Pławecki**
+
+Dziękujemy za wspólną pracę nad Fitens App! 💪
+
+---
+
+## 📄 Licencja
+
+Projekt na licencji MIT.
+
+---
+
+> Masz pomysł na ulepszenie? Forkuj repozytorium i otwórz pull request!
+
