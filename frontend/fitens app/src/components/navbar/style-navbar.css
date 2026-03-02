@@ -1,15 +1,4 @@
-*{
-  --bg-default: #0a0a0a;
-  --text-primary: #fff;
-  --buttonbg: rgba(0, 102, 255, 0.336);
-  --buttonborder: rgb(0, 102, 255);
-  
-}
 
-body {
-  background-color: #0a0a0a;
-  color: white;
-}
 .Navbar-container {
   position: sticky;
   display: flex;
@@ -51,6 +40,7 @@ body {
 
 
 .link {
+  position: relative; 
   color: var(--text-primary);
   text-decoration: none;
   font-size: 20px;
@@ -59,15 +49,40 @@ body {
   padding: 6px 15px;
   border: 2px solid transparent;
   border-radius: 10px;
-  transition: all 0.3s ease-in-out
+  transition: all 0.3s ease-in-out;
 }
+
 
 .link:hover,
 .link:active {
   transform: scale(1.1);
-  background-color: var(--buttonbg);
-  border: 2px solid  var(--buttonborder);
-  box-shadow: 0 0 10px var(--buttonborder);
+}
+
+
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background-color: var(--buttonborder); 
+  transform: scaleX(0);              
+  transform-origin: right;
+  transition: transform 0.3s ease-in-out;
+  border-radius: 2px;
+}
+
+
+.link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left; 
+}
+
+
+.link.active::after {
+  transform: scaleX(1);
+  transform-origin: right;
 }
 
 

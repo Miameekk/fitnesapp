@@ -1,0 +1,90 @@
+:root {
+  --color-red: #ff3b3f;
+  --color-yellow: #ffd700;
+  --color-dark: #333;
+}
+
+.carouselWrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  background: linear-gradient(90deg, var(--color-red) 0%, var(--color-dark) 100%);
+  padding: 2rem 0 1rem;
+}
+
+.carouselTitle {
+  color: #fff;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.carouselTrack {
+  display: flex;
+  width: calc(200%); /* because we duplicate */
+  animation: moveLeft 20s linear infinite;
+}
+
+.card {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 180px;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.iconWrapper {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #fff; /* emoji inherits color for outline look */
+}
+
+.label {
+  font-weight: 600;
+  color: var(--color-dark);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  white-space: nowrap;
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* responsive tweaks */
+@media (max-width: 800px) {
+  .card {
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 500px) {
+  .card {
+    min-width: 120px;
+    padding: 0.5rem;
+  }
+}
