@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { validatePlanData } from "../validators/planValidator.js";
 import { generateTrainingPlan } from "../services/ollamaService.js";
 import Plan from "../models/Plan.js";
@@ -9,13 +10,12 @@ export async function generatePlan(req, res) {
       return res.status(400).json({ success: false, error });
     }
 
-    if (!req.body.userId) {
-      return res.status(400).json({ success: false, error: "Brak pola: userId" });
-    }
+    // Jeśli userId nie jest podany generuje go automatycznie
+    const userId = req.body.userId || randomUUID();
 
     const raw = await generateTrainingPlan(req.body);
 
-    // spróbuj sparsować odpowiedź AI; jeśli nie jest JSON, zapisz surowy tekst
+    // proba sparowania odpowedzi ej-aj jesli nie jest JSON zapisuje surowy tekst eh
     let parsedPlan;
     try {
       parsedPlan = typeof raw === "string" ? JSON.parse(raw) : raw;
@@ -24,7 +24,7 @@ export async function generatePlan(req, res) {
     }
 
     const newPlan = await Plan.create({
-      userId: req.body.userId,
+      userId: userId,
       age: req.body.age,
       weight: req.body.weight,
       goal: req.body.goal,

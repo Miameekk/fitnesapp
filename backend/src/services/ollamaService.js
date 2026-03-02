@@ -1,3 +1,15 @@
+// Wyciąga czysty JSON z odpowiedzi AI (AI zwraca JSON opakowany w markdown code block)
+function extractJSON(text) {
+  // Spróbuj znaleźć JSON w markdown code block (```)
+  const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if (jsonMatch && jsonMatch[1]) {
+    return jsonMatch[1].trim();
+  }
+  // Jeśli nie ma markdown, spróbuj znaleźć JSON bezpośrednio
+  const directMatch = text.match(/\{[\s\S]*\}/);
+  return directMatch ? directMatch[0] : text;
+}
+
 export async function generateTrainingPlan(userData) {
   const prompt = `
 Zwróć WYŁĄCZNIE poprawny JSON.
@@ -40,5 +52,9 @@ Format JSON:
 
   console.log("[ollamaService] raw response:", data);
 
-  return data.response;
+  // Wyciągnij czysty JSON z odpowiedzi
+  const cleanedJSON = extractJSON(data.response);
+  console.log("[ollamaService] cleaned JSON:", cleanedJSON);
+
+  return cleanedJSON;
 }
