@@ -16,7 +16,8 @@ export default function Footer() {
 
         <div className="footer__links">
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/ai">AI</NavLink>
+          <NavLink to="/generate-plan">Generuj Plan</NavLink>
+          <NavLink to="/autors">Autorzy</NavLink>
         </div>
 
         <div className="footer__socials">

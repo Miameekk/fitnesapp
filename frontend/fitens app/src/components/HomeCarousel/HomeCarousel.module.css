@@ -1,7 +1,7 @@
 :root {
   --color-red: #ff3b3f;
-  --color-yellow: #ffd700;
   --color-dark: #333;
+  --color-white: #fff;
 }
 
 .carouselWrapper {
@@ -13,7 +13,7 @@
 }
 
 .carouselTitle {
-  color: #fff;
+  color: var(--color-white);
   font-size: 1.5rem;
   text-align: center;
   margin-bottom: 1rem;
@@ -23,8 +23,8 @@
 
 .carouselTrack {
   display: flex;
-  width: calc(200%); /* because we duplicate */
-  animation: moveLeft 20s linear infinite;
+  width: max-content; /* 🔑 zapętlona animacja */
+  will-change: transform; /* płynne przesuwanie */
 }
 
 .card {
@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: #fff;
+  background: var(--color-white);
   border-radius: 8px;
   padding: 0.5rem 1rem;
   margin: 0 0.5rem;
@@ -54,9 +54,9 @@
   align-items: center;
   justify-content: center;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid var(--color-white);
   border-radius: 50%;
-  color: #fff; /* emoji inherits color for outline look */
+  color: var(--color-white); /* emoji outline style */
 }
 
 .label {
@@ -64,15 +64,6 @@
   color: var(--color-dark);
   font-family: "Helvetica Neue", Arial, sans-serif;
   white-space: nowrap;
-}
-
-@keyframes moveLeft {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 /* responsive tweaks */
@@ -87,4 +78,9 @@
     min-width: 120px;
     padding: 0.5rem;
   }
+}
+
+/* opcjonalnie: pauza na hover */
+.carouselWrapper:hover .carouselTrack {
+  animation-play-state: paused;
 }

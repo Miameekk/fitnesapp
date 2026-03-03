@@ -1,0 +1,178 @@
+.bmi-container {
+  width: 100%;
+  max-width: 420px;
+  margin: 0; /* overlay centruje */
+  padding: 24px 28px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.4s ease;
+}
+
+.bmi-container h1 {
+  text-align: center;
+  margin-bottom: 6px;
+  font-size: 1.6rem;
+  color: var(--text-primary);
+}
+
+.bmi-container p {
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+  opacity: 0.7;
+}
+
+.bmi-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.form-group input {
+  padding: 10px 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--bg-default);
+  color: var(--text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent-dark);
+  box-shadow: 0 0 0 2px rgba(255, 59, 63, 0.25);
+}
+
+.bmi-form button {
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid var(--buttonborder);
+  cursor: pointer;
+  background: var(--buttonbg);
+  color: #fff;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.bmi-form button:hover {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+.bmi-close {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.bmi-close:hover {
+  background: var(--bg);
+  color: #fff;
+}
+
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 220px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid rgba(0, 0, 0, 0.1);
+  border-top: 6px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.bmi-result .bmi-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.bmi-result .bmi-buttons button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.bmi-result .bmi-alert {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 12px;
+  font-size: 1rem;
+}
+
+.bmi-result .bmi-image {
+  width: 100%;
+  max-width: 200px;
+  margin: 16px auto;
+}
+
+.bmi-result .bmi-image img {
+    width: 100%;
+    height: auto;
+}
+
+.bmi-result .bmi-buttons .oblicz-ponownie {
+  background: var(--buttonbg);
+  border: 1px solid var(--buttonborder);
+  color: #fff;
+}
+
+.bmi-result .bmi-buttons .oblicz-ponownie:hover {
+  background: var(--accent-dark);
+}
+
+.bmi-result .bmi-buttons .close-bmi {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.bmi-result .bmi-buttons .close-bmi:hover {
+  background: var(--bg);
+  color: #fff;
+}
+
+
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

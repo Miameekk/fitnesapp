@@ -68,12 +68,14 @@
   padding: 0.75rem 1.5rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease-out;
 }
 
 .btn-primary:hover {
   background: var(--accent-dark);
   color: #fff;
+  transform: scale(1.1);
+  border: 2px solid var(--accent-dark);
 }
 
 /* feature cards */
@@ -126,10 +128,11 @@
 
 .feature .icon {
   display: block;
-  margin: 5% auto;
+  margin: 1rem auto;
   width: 30px;
   height: 30px;
   background: var(--feature-color);
+  color: #fff;
   border-radius: 50%;
   padding: 0.5rem;
   position: absolute;
@@ -156,7 +159,7 @@
 
 .feature h2 {
   color: var(--feature-color);
-  margin-top: 4rem; /* push below icon area */
+  margin-top: 4rem;
   font-size: 1.25rem;
 }
 
@@ -165,10 +168,27 @@
   color: #555;
 }
 
+.link-btn {
+  margin-top: auto;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+.link-btn:hover {
+  background: var(--accent-dark);
+  transform: scale(1.1);
+}
+
 .coming-soon {
   margin-top: 1.7rem;
   font-size: 7px;
-  margin-left: 6rem;
+  margin-left: 18rem;
   font-size: 0.8rem;
   padding: 5px 10px; 
   background-color: var(--bg);
@@ -268,6 +288,16 @@
   background: var(--accent-dark);
 }
 
+.bmi-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 
 @media (max-width: 900px) {
   .features {

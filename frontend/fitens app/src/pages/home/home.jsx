@@ -1,9 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState  } from "react";
 import { NavLink } from "react-router-dom";
 import "./home.css";
 import HomeCarousel from "../../components/HomeCarousel/HomeCarousel";
+import BmiCalculator from "../bmi/bmi.jsx";
+
 
 export default function Home() {
+  const [showBmi, setShowBmi] = useState(false);
+
   useEffect(() => {
     // first sequence hero -> features -> carousel with timed delays
     const seq = ['.hero', '.features', '.carousel-section'];
@@ -15,7 +19,6 @@ export default function Home() {
       }
     });
 
-    // remaining sections (about, appai) appear when scrolled into view
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
@@ -35,6 +38,15 @@ export default function Home() {
 
   return (
     <div className="home-container">
+
+
+      {/*bmi calculator */}
+      {showBmi && (
+        <div className="bmi-overlay">
+          <BmiCalculator setShowBmi={setShowBmi} showBmi={showBmi} />
+        </div>
+      )}
+
       {/* Hero / Welcome */}
       <section className="hero fade-in">
         <div className="hero-circle" />
@@ -51,11 +63,13 @@ export default function Home() {
           <ion-icon name="fitness-outline" className="icon" />
           <h2>Plany treningowe</h2>
           <p>Spersonalizowane ćwiczenia.</p>
+          <NavLink to="/generate-plan" className="link-btn">Rozpocznij</NavLink>
         </div>
         <div className="feature">
           <ion-icon name="body-outline" className="icon" />
           <h2>Kalkulator BMI</h2>
           <p>Oblicz swój BMI i śledź postępy.</p>
+         <button className="link-btn" onClick={() => setShowBmi(true)}>Rozpocznij</button>
         </div>
         <div className="feature">
           <ion-icon name="restaurant-outline" className="icon" />
@@ -84,7 +98,7 @@ export default function Home() {
             cele treningowe. Niezależnie od poziomu zaawansowania, znajdziesz tu
             inspirację i wsparcie. Trenerzy i społeczność wspierają każdy krok.
           </p>
-          <NavLink to="/ai" className="about-button">Zacznij już teraz!</NavLink>
+          <NavLink to="/generate-plan" className="about-button">Zacznij już teraz!</NavLink>
         </div>
         <div className="about-image">
           <img src="/trener.png" alt="Trener" />

@@ -1,7 +1,6 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 import styles from "./HomeCarousel.module.css";
 
-// list of carousel items with name and an emoji character (outline style preferred)
 const items = [
   { name: "Hantle", icon: "🏋️‍♂️" },
   { name: "Bieżnia", icon: "🏃‍♂️" },
@@ -13,13 +12,40 @@ const items = [
 ];
 
 export default function HomeCarousel() {
-  const displayItems = [...items, ...items];
+  const trackRef = useRef(null);
+  const positionRef = useRef(0); // 🔑 utrzymujemy pozycję między klatkami
+
+useEffect(() => {
+  const track = trackRef.current;
+  const speed = 0.5;
+
+  const animate = () => {
+    positionRef.current -= speed;
+
+    const firstListWidth = track.scrollWidth / 2;
+
+    // szerokość jednej karty
+    const cardWidth = track.children[0].getBoundingClientRect().width + 1; // +1 dla margin/padding
+
+    // 🔥 reset 4 od końca
+    const resetPoint = firstListWidth - cardWidth * 3;
+
+    if (Math.abs(positionRef.current) >= resetPoint) {
+      positionRef.current = 0;
+    }
+
+    track.style.transform = `translateX(${positionRef.current}px)`;
+    requestAnimationFrame(animate);
+  };
+
+  requestAnimationFrame(animate);
+}, []);
 
   return (
     <div className={styles.carouselWrapper}>
       <h3 className={styles.carouselTitle}>Przyrządy do ćwiczeń</h3>
-      <div className={styles.carouselTrack}>
-        {displayItems.map((item, index) => (
+      <div className={styles.carouselTrack} ref={trackRef}>
+        {[...items, ...items].map((item, index) => (
           <div className={styles.card} key={index}>
             <div className={styles.iconWrapper}>{item.icon}</div>
             <div className={styles.label}>{item.name}</div>
