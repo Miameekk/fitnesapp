@@ -40,7 +40,7 @@ backend
 ### Frontend
 
 * React
-* TypeScript
+* JavaScript
 * fetch / axios
 
 ### Backend
