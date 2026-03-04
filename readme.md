@@ -257,3 +257,9 @@ Forkuj, kombinuj, ulepszaj 💪
 ---
 
 **Miłego klepania kodu i powodzenia z czarnuszkiem 🖤🔥**
+
+
+komenda
+komenda
+$body = @{ age=25; weight=75; goal='masa'; days=4; experience='średnio' ; userId = 'user12'} | ConvertTo-Json
+Invoke-RestMethod -Uri 'http://localhost:3001/api/generate-plan' -Method Post -ContentType 'application/json' -Body $body
