@@ -65,6 +65,7 @@
   color: var(--accent);
   border: 2px solid #fff;
   border-radius: 10px;
+  text-decoration: none;
   padding: 0.75rem 1.5rem;
   font-weight: bold;
   cursor: pointer;
@@ -290,9 +291,8 @@
 
 .bmi-overlay {
   position: fixed;
-  inset: 0;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
   background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -53,7 +53,7 @@ export default function Home() {
         <div className="hero-content">
           <h1>Witaj w Fitnes App!</h1>
           <p>Twoja aplikacja do tworzenia planów treningowych, obliczania BMI i zdrowego stylu życia.</p>
-          <button className="btn-primary">Rozpocznij teraz</button>
+          <NavLink to="/generate-plan" className="btn-primary">Rozpocznij teraz</NavLink>
         </div>
       </section>
 

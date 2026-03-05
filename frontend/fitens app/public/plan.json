@@ -1,0 +1,43 @@
+{
+  "plan": [
+    {
+      "dzien": "Monday",
+      "partia": "Chest and Triceps",
+      "cwiczenia": [
+        { "nazwa": "Bench Press", "serie": 3, "powtorzenia": "8-12" },
+        { "nazwa": "Incline Dumbbell Press", "serie": 3, "powtorzenia": "10-15" },
+        { "nazwa": "Tricep Pushdown", "serie": 3, "powtorzenia": "12-16" }
+      ]
+    },
+    {
+      "dzien": "Tuesday",
+      "partia": "Back and Biceps",
+      "cwiczenia": [
+        { "nazwa": "Pull-ups", "serie": 3, "powtorzenia": "8-12" },
+        { "nazwa": "Barbell Rows", "serie": 3, "powtorzenia": "10-15" },
+        { "nazwa": "Dumbbell Bicep Curls", "serie": 3, "powtorzenia": "12-16" }
+      ]
+    },
+    {
+      "dzien": "Wednesday",
+      "partia": "Rest Day",
+      "cwiczenia": []
+    },
+    {
+      "dzien": "Thursday",
+      "partia": "Legs and Shoulders",
+      "cwiczenia": [
+        { "nazwa": "Squats", "serie": 3, "powtorzenia": "8-12" },
+        { "nazwa": "Leg Press", "serie": 3, "powtorzenia": "10-15" },
+        { "nazwa": "Standing Military Press", "serie": 3, "powtorzenia": "12-16" }
+      ]
+    },
+    {
+      "dzien": "Friday",
+      "partia": "Cardio",
+      "cwiczenia": [
+        { "nazwa": "Treadmill", "serie": 30, "powtorzenia": "" }
+      ]
+    }
+  ]
+}
