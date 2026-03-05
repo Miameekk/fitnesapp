@@ -62,6 +62,7 @@ export default function Plan() {
     return (
         <div className="generate-container">
             <h2 className="title-plan">Wygeneruj plan treningowy dla siebie</h2>
+            <div className='plan-linia'></div>
             <div className="form-columns">
             <div className="form-container-left">
                 <form className="generate-form" onSubmit={handleSubmit}>

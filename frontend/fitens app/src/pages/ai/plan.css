@@ -16,6 +16,14 @@
     animation: fadeIn 1s ease;
 }
 
+.plan-linia {
+    width: 50%;
+    height: 4px;
+    background: var(--accent);
+    margin: 0 auto 30px auto;
+    border-radius: 20px;
+}
+
 .form-container-left {
     float: left;
     width: 30%;
