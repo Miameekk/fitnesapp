@@ -24,6 +24,7 @@ export default function Plan() {
 
 
         // --- REF do prawej kolumny ---
+        //tak
     const rightColRef = useRef();
 
     // --- Funkcja generująca PDF ---
