@@ -100,8 +100,12 @@ export async function generateTrainingPlan(mealPlanData, healthData) {
   const prompt = `
 Zwróć WYŁĄCZNIE poprawny JSON.
 Stwórz plan treningowy na podstawie planu posiłków i danych zdrowotnych.
+WAŻNE:
+1. Użyj języka ANGIELSKIEGO dla wszystkich wartości (nazwy ćwiczeń, partie mięśniowe, dni).
+2. Zachowaj polskie klucze w strukturze JSON (dzien, partia, cwiczenia, nazwa, serie, powtorzenia).
+3. "dzien" ma być np. "Day 1", "Monday", a NIE nazwą posiłku.
 
-Plan posiłków: ${JSON.stringify(mealPlanData)}
+Plan posiłków (tylko jako kontekst kaloryczny): ${JSON.stringify(mealPlanData)}
 
 Dane użytkownika:
 - Wiek: ${healthData.age}
@@ -110,6 +114,7 @@ Dane użytkownika:
 - Płeć: ${healthData.gender}
 - Deficyt kaloryczny: ${healthData.caloricDeficit}
 - Cel: ${healthData.goal}
+- Dni treningowe w tygodniu: ${healthData.days}
 - Problemy zdrowotne: ${healthData.healthIssues || 'Brak'}
 - Dodatkowe uwagi: ${healthData.additionalNotes || 'Brak'}
 - Ćwiczenia wykluczone: ${healthData.excludedExercises || 'Brak'}
@@ -118,10 +123,10 @@ Format JSON:
 {
   "plan": [
     {
-      "dzien": "",
-      "partia": "",
+      "dzien": "Day 1",
+      "partia": "Chest + Triceps",
       "cwiczenia": [
-        { "nazwa": "", "serie": 0, "powtorzenia": "" }
+        { "nazwa": "Bench Press", "serie": 3, "powtorzenia": "10-12" }
       ]
     }
   ]

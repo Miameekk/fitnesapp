@@ -9,7 +9,7 @@ export async function generatePlan(req, res) {
   try {
     // Zgodnie z założeniem, że zawsze używamy ostatniego planu,
     // z ciała zapytania potrzebujemy tylko opcjonalnych wykluczonych ćwiczeń.
-    const { excludedExercises } = req.body;
+    const { excludedExercises, days } = req.body;
 
     // Wyszukujemy najnowszy, niewygasły plan posiłków w bazie danych.
     const mealPlanRecord = await MealPlan.findOne({
@@ -34,7 +34,8 @@ export async function generatePlan(req, res) {
       goal: mealPlanRecord.goal,
       healthIssues: mealPlanRecord.healthIssues,
       additionalNotes: mealPlanRecord.additionalNotes,
-      excludedExercises: excludedExercises || 'Brak'
+      excludedExercises: excludedExercises || 'Brak',
+      days: days || 3 // Używamy dni z requestu lub domyślnie 3
     };
 
     const raw = await generateTrainingPlan(mealPlanRecord.mealPlan, healthData);
@@ -44,7 +45,11 @@ export async function generatePlan(req, res) {
     try {
       parsedPlan = typeof raw === "string" ? JSON.parse(raw) : raw;
     } catch (e) {
-      parsedPlan = raw;
+      console.error("Błąd parsowania JSON z AI przy tworzeniu planu treningowego:", raw);
+      return res.status(500).json({
+        success: false,
+        error: "Otrzymano nieprawidłowe dane z serwisu AI. Spróbuj ponownie."
+      });
     }
 
     // Store final training plan
@@ -61,6 +66,7 @@ export async function generatePlan(req, res) {
       healthIssues: mealPlanRecord.healthIssues,
       additionalNotes: mealPlanRecord.additionalNotes,
       excludedExercises: excludedExercises,
+      days: healthData.days, // Zapisujemy liczbę dni
       plan: parsedPlan
     });
 
