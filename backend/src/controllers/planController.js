@@ -2,20 +2,44 @@ import { randomUUID } from "crypto";
 import { validatePlanData } from "../validators/planValidator.js";
 import { generateTrainingPlan } from "../services/ollamaService.js";
 import Plan from "../models/Plan.js";
+import MealPlan from "../models/MealPlan.js";
+import { Op } from "sequelize";
 
 export async function generatePlan(req, res) {
   try {
-    const error = validatePlanData(req.body);
-    if (error) {
-      return res.status(400).json({ success: false, error });
+    // Zgodnie z założeniem, że zawsze używamy ostatniego planu,
+    // z ciała zapytania potrzebujemy tylko opcjonalnych wykluczonych ćwiczeń.
+    const { excludedExercises } = req.body;
+
+    // Wyszukujemy najnowszy, niewygasły plan posiłków w bazie danych.
+    const mealPlanRecord = await MealPlan.findOne({
+      where: { expiresAt: { [Op.gt]: new Date() } }, // Upewniamy się, że nie wygasł
+      order: [ [ 'createdAt', 'DESC' ] ] // Sortujemy po dacie utworzenia malejąco i bierzemy pierwszy
+    });
+
+    if (!mealPlanRecord) {
+      return res.status(404).json({
+        success: false,
+        error: "Nie znaleziono aktywnego planu posiłków. Wygeneruj najpierw plan posiłków."
+      });
     }
 
-    // Jeśli userId nie jest podany generuje go automatycznie
-    const userId = req.body.userId || randomUUID();
+    // Prepare data for AI - combine meal plan with health data
+    const healthData = {
+      age: mealPlanRecord.age,
+      weight: mealPlanRecord.weight,
+      height: mealPlanRecord.height,
+      gender: mealPlanRecord.gender,
+      caloricDeficit: mealPlanRecord.caloricDeficit,
+      goal: mealPlanRecord.goal,
+      healthIssues: mealPlanRecord.healthIssues,
+      additionalNotes: mealPlanRecord.additionalNotes,
+      excludedExercises: excludedExercises || 'Brak'
+    };
 
-    const raw = await generateTrainingPlan(req.body);
+    const raw = await generateTrainingPlan(mealPlanRecord.mealPlan, healthData);
 
-    // proba sparowania odpowedzi ej-aj jesli nie jest JSON zapisuje surowy tekst eh
+    // Parse the response
     let parsedPlan;
     try {
       parsedPlan = typeof raw === "string" ? JSON.parse(raw) : raw;
@@ -23,26 +47,37 @@ export async function generatePlan(req, res) {
       parsedPlan = raw;
     }
 
+    // Store final training plan
     const newPlan = await Plan.create({
-      userId: userId,
-      age: req.body.age,
-      weight: req.body.weight,
-      goal: req.body.goal,
-      days: req.body.days,
-      experience: req.body.experience,
+      userId: mealPlanRecord.userId,
+      sessionId: mealPlanRecord.sessionId, // Używamy sessionId z odnalezionego rekordu
+      mealPlanId: mealPlanRecord.id,
+      age: mealPlanRecord.age,
+      weight: mealPlanRecord.weight,
+      height: mealPlanRecord.height,
+      gender: mealPlanRecord.gender,
+      caloricDeficit: mealPlanRecord.caloricDeficit,
+      goal: mealPlanRecord.goal,
+      healthIssues: mealPlanRecord.healthIssues,
+      additionalNotes: mealPlanRecord.additionalNotes,
+      excludedExercises: excludedExercises,
       plan: parsedPlan
     });
+
+    // Clean up temporary meal plan after successful training plan creation
+    await MealPlan.destroy({ where: { id: mealPlanRecord.id } });
 
     res.json({
       success: true,
       plan: parsedPlan,
-      id: newPlan.id
+      id: newPlan.id,
+      message: "Plan treningowy został wygenerowany i zapisany."
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({
       success: false,
-      error: "Błąd generowania planu"
+      error: "Błąd generowania planu treningowego"
     });
   }
 }

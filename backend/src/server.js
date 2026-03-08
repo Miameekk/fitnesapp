@@ -16,7 +16,7 @@ app.get('/api/health', (req, res) => {
   res.json({ success: true, status: 'ok' });
 });
 
-await sequelize.sync();
+await sequelize.sync(); 
 
 const PORT = 3001;
 app.listen(PORT, () => {
