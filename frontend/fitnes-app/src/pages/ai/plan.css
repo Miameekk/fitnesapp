@@ -1,4 +1,5 @@
 
+
 .generate-container {
     width: 100%;
     min-height: 100vh;
@@ -24,11 +25,20 @@
     border-radius: 20px;
 }
 
+.form-columns {
+    display: flex;
+    gap: 5%;
+    flex-wrap: wrap;
+}
+
 .form-container-left {
-    float: left;
-    width: 30%;
-    margin-right: 5%;
+    flex: 0 0 30%;
     min-width: 300px;
+    animation: fadeIn 1s ease;
+}
+
+.form-container-right {
+    flex: 0 0 65%;
     animation: fadeIn 1s ease;
 }
 
@@ -81,6 +91,10 @@
     transition: background 0.3s;
 }
 
+.generate-form button:hover {
+    background: var(--accent-dark);
+}
+
 .btn-backtohome{
     padding: 12px;
     border: none;
@@ -93,17 +107,16 @@
     cursor: pointer;
     transition: background 0.3s;
     text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
 }
 
-.generate-form button:hover,
 .btn-backtohome:hover {
     background: var(--accent-dark);
 }
 
-.form-container-right {
-    padding: 30px;
-    float: right;
-    width: 65%;
+.plan-wrapper, .diet-wrapper {
+    margin-bottom: 30px;
 }
 
 .plan-container {
@@ -116,6 +129,7 @@
 .plan-card {
     background: #ffffff;
     border-radius: 15px;
+    margin-top: 20px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     overflow: hidden;
     display: flex;
@@ -150,25 +164,76 @@
     border-top: 1px solid #eee;
 }
 
-
-
 .plan-body ul {
     list-style: inside disc;
     color: #555;
     line-height: 1.6;
 }
 
-.form-columns::after {
-    content: "";
-    display: block;
-    clear: both;
+.diet-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+    animation: fadeIn 1s ease;
+}
+
+.diet-table th,
+.diet-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    vertical-align: top;
+}
+
+.diet-table th {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+}
+
+.diet-table td ul {
+    padding-left: 15px;
+    margin: 0;
+}
+
+.diet-total td {
+    font-weight: 700;
 }
 
 @media (max-width: 900px) {
+    .form-columns {
+        flex-direction: column;
+    }
+
     .form-container-left,
     .form-container-right {
-        float: none;
-        width: 100%;
+        flex: 0 0 100%;
         margin: 0 0 20px 0;
     }
+
+    .plan-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.pdf-mode * {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+}
+
+.pdf-mode .plan-card,
+.pdf-mode .diet-table {
+    padding: 20px !important;
+}
+
+.pdf-mode .plan-card {
+    background-color: #ffffff !important;
+    border-radius: 15px !important;
+}
+.pdf-mode .diet-table th {
+    background-color: var(--accent) !important;
+    color: #fff !important;
 }
