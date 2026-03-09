@@ -15,6 +15,7 @@ export async function generateMealPlan(healthData) {
     const prompt = `
 Zwróć WYŁĄCZNIE poprawny JSON.
 Stwórz plan posiłków na podstawie danych.
+Użyj języka ANGIELSKIEGO dla wszystkich wartośc
 
 Dane:
 - Deficyt kaloryczny: ${healthData.caloricDeficit} kcal/dzień
@@ -98,41 +99,54 @@ Format JSON:
 
 export async function generateTrainingPlan(mealPlanData, healthData) {
   const prompt = `
-Zwróć WYŁĄCZNIE poprawny JSON.
-Stwórz plan treningowy na podstawie planu posiłków i danych zdrowotnych.
-WAŻNE:
-1. Użyj języka ANGIELSKIEGO dla wszystkich wartości (nazwy ćwiczeń, partie mięśniowe, dni).
-2. Zachowaj polskie klucze w strukturze JSON (dzien, partia, cwiczenia, nazwa, serie, powtorzenia).
-3. "dzien" ma być np. "Day 1", "Monday", a NIE nazwą posiłku.
+Return ONLY valid JSON.
 
-Plan posiłków (tylko jako kontekst kaloryczny): ${JSON.stringify(mealPlanData)}
+Create a weekly training plan based on the user's health data and calorie context.
 
-Dane użytkownika:
-- Wiek: ${healthData.age}
-- Waga: ${healthData.weight}
-- Wzrost: ${healthData.height}
-- Płeć: ${healthData.gender}
-- Deficyt kaloryczny: ${healthData.caloricDeficit}
-- Cel: ${healthData.goal}
-- Dni treningowe w tygodniu: ${healthData.days}
-- Problemy zdrowotne: ${healthData.healthIssues || 'Brak'}
-- Dodatkowe uwagi: ${healthData.additionalNotes || 'Brak'}
-- Ćwiczenia wykluczone: ${healthData.excludedExercises || 'Brak'}
+CRITICAL RULES (MUST FOLLOW):
+  1. Use ENGLISH for all values (exercise names, muscle groups, days).
+  2. Keep POLISH JSON keys (dzien, partia, cwiczenia, nazwa, serie, powtorzenia).
+  3. "dzien" must be "Day 1", "Day 2", etc.
+  4. Minimum 3 exercises per day.
+  5. NEVER include exercises from the excluded list.
+  6. If an excluded exercise is common (e.g. Squat), replace it with a SAFE alternative.
+  7. Respect health issues and additional notes when selecting exercises.
+  8. Avoid exercises that may worsen listed health problems.
 
-Format JSON:
-{
-  "plan": [
-    {
-      "dzien": "Day 1",
-      "partia": "Chest + Triceps",
-      "cwiczenia": [
-        { "nazwa": "Bench Press", "serie": 3, "powtorzenia": "10-12" }
-      ]
-    }
-  ]
-}
+  EXCLUDED EXERCISES (STRICTLY FORBIDDEN):
+  ${healthData.excludedExercises || 'None'}
+
+  HEALTH ISSUES:
+  ${healthData.healthIssues || 'None'}
+
+  ADDITIONAL NOTES:
+  ${healthData.additionalNotes || 'None'}
+
+  USER DATA:
+  Age: ${healthData.age}
+  Weight: ${healthData.weight}
+  Height: ${healthData.height}
+  Gender: ${healthData.gender}
+  Calorie deficit: ${healthData.caloricDeficit}
+  Goal: ${healthData.goal}
+  Training days per week: ${healthData.days}
+
+  Meal plan (calorie context only):
+  ${JSON.stringify(mealPlanData)}
+
+  JSON FORMAT:
+  {
+    "plan": [
+      {
+        "dzien": "Day 1",
+        "partia": "Chest + Triceps",
+        "cwiczenia": [
+          { "nazwa": "Bench Press", "serie": 3, "powtorzenia": "10-12" }
+        ]
+      }
+    ]
+  }
 `;
-
   const response = await fetch("http://localhost:11434/api/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
