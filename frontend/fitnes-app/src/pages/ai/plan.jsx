@@ -15,6 +15,8 @@ export default function Plan() {
     const [activity, setActivity] = useState('');
     const [experience, setExperience] = useState('');
     const [notes, setNotes] = useState('');
+    const [healt, setHealth] = useState('');
+    const [exercises, setExercises] = useState('');
     const [isLocked, setIsLocked] = useState(false);
     const [pdflock, setPdflock] = useState(true);
 
@@ -137,7 +139,7 @@ const handleSubmit = async (e) => {
         // PLAN DIETY
         // ======================
         const dietResponse = await fetch(
-            "https://volvo-evanescence-classified-modern.trycloudflare.com/api/submit-health-data",
+            "http://localhost:3001/api/submit-health-data",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -148,7 +150,7 @@ const handleSubmit = async (e) => {
                     gender: sex,
                     caloricDeficit: goalCalories,
                     goal,
-                    healthIssues: "brak",
+                    healthIssues: healt,
                     additionalNotes: notes || ""
                 })
             }
@@ -193,12 +195,12 @@ const handleSubmit = async (e) => {
         // PLAN TRENINGOWY
         // ======================
         const trainingResponse = await fetch(
-            "https://volvo-evanescence-classified-modern.trycloudflare.com/api/generate-plan",
+            "http://localhost:3001/api/generate-plan",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    excludedExercises: "Brak",
+                    excludedExercises: exercises,
                     days: Number(days),
                 })
             }
@@ -282,6 +284,12 @@ const handleSubmit = async (e) => {
                     <option value="high">Wysoka</option>
                     </select>
 
+                    <label>Czy masz jakies problemy zdrowotne?</label>
+                    <textarea placeholder='Problemy zdrowotne' value={healt} onChange={(e) => setHealth(e.target.value)} disabled={isLocked}></textarea>
+
+                    <label>Czy chcesz wyłączyc jakieś ćwiczenia z trenigu?</label>
+                    <textarea placeholder='Wypisz nazwy ćwiczeń (OGÓLNIE!)' value={exercises} onChange={(e) => setExercises(e.target.value)} disabled={isLocked}></textarea>
+
                     <label>Dodatkowe Uwagi</label>
                     <textarea placeholder="Dodatkowe Uwagi" value={notes} onChange={(e) => setNotes(e.target.value)} disabled={isLocked}></textarea>
 
@@ -343,12 +351,12 @@ const handleSubmit = async (e) => {
                         </thead>
                         <tbody>
                         {dietPlan.map((meal, idx) => (
-                            <tr key={idx}>
-                            <td>{meal.meal}</td>
-                            <td>{meal.calories}</td>
-                            <td>{meal.protein}</td>
-                            <td>{meal.carbs}</td>
-                            <td>{meal.fat}</td>
+                            <tr key={idx} >
+                            <td>{meal.meal} g</td>
+                            <td>{meal.calories} g</td>
+                            <td>{meal.protein} g</td>
+                            <td>{meal.carbs} g</td>
+                            <td>{meal.fat} g</td>
                             <td>
                                 <ul>
                                 {meal.foods.map((food, fIdx) => (
