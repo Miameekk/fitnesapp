@@ -1,265 +1,69 @@
-Pewnie 😄
-Poniżej masz **gotową treść `README.md`**, którą możesz **wkleić 1:1 do repo** i działać z „czarnuszkiem” bez zgadywania co, gdzie i po co.
+# 🎉 FitnesApp — aplikacja fitness
 
----
+Wesoły projekt aplikacji fitness przygotowany na potrzeby Dni Otwartych. 💪🥗
 
-# 🏋️‍♂️ AI Trening Planner (React + API + Ollama)
+**Autorzy:** Damian Bukowiec, Jakub Pawecki ✨
 
-Aplikacja webowa generująca **spersonalizowany plan treningowy** na podstawie danych użytkownika.
-Frontend (React) komunikuje się z backendem (Node.js), który wysyła zapytanie do **lokalnie uruchomionego AI (Ollama)**.
-Wygenerowany plan:
+## 📌 Opis
 
-* jest wyświetlany w aplikacji
-* może zostać **wysłany na e-mail użytkownika**
+FitnesApp to prosty serwis do generowania i przeglądania planów posiłków i treningów. Projekt składa się z backendu (Node.js/Express) i frontendu (React + Vite). Został przygotowany na potrzeby prezentacji podczas Dni Otwartych.
 
----
+## 🧰 Stos technologiczny
 
-## 📐 Architektura
+- Backend: Node.js, Express 🖥️
+- Frontend: React, Vite ⚛️
+- Usługi: lokalne pliki oraz integracja z `ollamaService` w backendzie 🤖
+- Model AI: llama3 🔎
 
-```
-frontend (React)
-   |
-   | POST /api/generate-plan
-   v
-backend (Node.js + Express)
-   |
-   | POST http://localhost:11434/api/generate
-   v
-Ollama (LLM – lokalnie)
-   |
-   v
-backend
-   ├── zwraca JSON do frontendu
-   └── wysyła plan na maila
-```
+## ▶️ Szybkie uruchomienie
 
----
+1) Backend
 
-## 🧱 Technologie
-
-### Frontend
-
-* React
-* JavaScript
-* fetch / axios
-
-### Backend
-
-* Node.js
-* Express
-* nodemailer
-* dotenv
-
-### AI
-
-* Ollama (lokalnie)
-* Model: `llama3` (lub inny)
-
----
-
-## ⚙️ Wymagania
-
-* Node.js ≥ 18
-* Ollama zainstalowana lokalnie
-  👉 [https://ollama.com](https://ollama.com)
-* Uruchomiony model, np.:
-
-```bash
-ollama pull llama3
-ollama run llama3
-```
-
----
-
-## 📁 Struktura projektu
-
-```
-project-root
-│
-├── frontend/
-│   └── React app
-│
-├── backend/
-│   ├── index.js
-│   ├── mailer.js
-│   ├── .env
-│   └── package.json
-│
-└── README.md
-```
-
----
-
-## 🖥️ Frontend – jak działa
-
-1. Użytkownik wypełnia formularz:
-
-   * wiek
-   * wzrost
-   * waga
-   * cel treningowy
-   * liczba dni treningowych
-   * poziom zaawansowania
-   * email
-
-2. React wysyła dane do backendu:
-
-```ts
-fetch("http://localhost:3001/api/generate-plan", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(formData)
-});
-```
-
-3. Odbiera **JSON z planem treningowym** i wyświetla go w UI.
-
----
-
-## 🧠 Backend – jak działa
-
-### Endpoint
-
-```
-POST /api/generate-plan
-```
-
-### Flow:
-
-1. Odbiera dane z frontendu
-2. Buduje **prompt dla AI**
-3. Wysyła request do **Ollama**
-4. Odbiera wygenerowany plan (JSON)
-5. Opcjonalnie:
-
-   * wysyła plan na maila
-6. Zwraca plan do frontendu
-
----
-
-## ✍️ Prompt do Ollama (przykład)
-
-```
-Stwórz plan treningowy siłowy.
-
-Dane użytkownika:
-- Wiek: 25
-- Waga: 82 kg
-- Wzrost: 180 cm
-- Cel: Budowa masy
-- Dni treningowe: 4
-- Poziom: Średniozaawansowany
-
-Zwróć WYŁĄCZNIE poprawny JSON w formacie:
-
-{
-  "plan": [
-    {
-      "dzien": "",
-      "partia": "",
-      "cwiczenia": [
-        {
-          "nazwa": "",
-          "serie": 0,
-          "powtorzenia": "",
-          "przerwaSek": 0
-        }
-      ]
-    }
-  ]
-}
-```
-
-⚠️ **Nie dodawaj żadnego tekstu poza JSON-em.**
-
----
-
-## 📦 Przykładowa odpowiedź AI
-
-AI zwraca **ustrukturyzowany JSON**, który:
-
-* frontend mapuje do komponentów
-* backend renderuje do maila
-
-(Przykład w repo jako `example-response.json`)
-
----
-
-## 📧 Wysyłka maila
-
-Backend używa **nodemailer**.
-
-### Zmienne środowiskowe (`.env`)
-
-```
-MAIL_USER=twojmail@gmail.com
-MAIL_PASS=haslo_aplikacji
-```
-
-### Mail zawiera:
-
-* temat: „Twój plan treningowy”
-* treść: wygenerowany plan (text lub HTML)
-
----
-
-## 🔐 Bezpieczeństwo
-
-* ❌ Frontend **NIE** komunikuje się bezpośrednio z Ollama
-* ✅ Cała logika AI tylko w backendzie
-* ✅ Walidacja danych wejściowych
-* ✅ Brak kluczy API po stronie klienta
-
----
-
-## 🧪 Testowanie lokalne
-
-1. Uruchom Ollama:
-
-```bash
-ollama run llama3
-```
-
-2. Backend:
+Przejdź do katalogu backend i zainstaluj zależności oraz uruchom serwer:
 
 ```bash
 cd backend
+npm install express
+npm start
+```
+
+Domyślnie serwer uruchamia się na porcie określonym w `backend/src/server.js` (można to zmienić przez zmienne środowiskowe).
+
+2) Frontend
+
+Przejdź do katalogu frontendu i uruchom aplikację deweloperską:
+
+```bash
+cd frontend/fitnes-app
 npm install
 npm run dev
 ```
 
-3. Frontend:
+Frontend dostępny będzie pod adresem podanym przez Vite (domyślnie http://localhost:5173).
 
-```bash
-cd frontend
-npm install
-npm start
-```
+## Struktura projektu (wybrane pliki)
 
----
+- Backend główny plik serwera: [backend/src/server.js](backend/src/server.js#L1)
+- Konfiguracja bazy danych: [backend/src/config/database.js](backend/src/config/database.js#L1)
+- Kontrolery: [backend/src/controllers/planController.js](backend/src/controllers/planController.js#L1)
+- Modele: [backend/src/models/Plan.js](backend/src/models/Plan.js#L1), [backend/src/models/MealPlan.js](backend/src/models/MealPlan.js#L1)
+- Trasy: [backend/src/routes/planRoutes.js](backend/src/routes/planRoutes.js#L1)
+- Usługa AI/integracja: [backend/src/services/ollamaService.js](backend/src/services/ollamaService.js#L1)
 
-## 🚀 Możliwe rozszerzenia
+- Frontend wejście: [frontend/fitnes-app/src/main.jsx](frontend/fitnes-app/src/main.jsx#L1)
+- Główna aplikacja: [frontend/fitnes-app/src/App.jsx](frontend/fitnes-app/src/App.jsx#L1)
+- Publiczny plan demo: [frontend/fitnes-app/public/plan.json](frontend/fitnes-app/public/plan.json#L1)
 
-* streaming odpowiedzi AI (live typing)
-* zapis planów do bazy danych
-* PDF z planem treningowym
-* historia treningów użytkownika
-* różne języki
-* personalizacja pod kontuzje
+## Konfiguracja i zmienne środowiskowe
 
----
+Sprawdź `backend/src/config/database.js` w celu informacji o połączeniu z bazą. Jeśli używasz dodatkowych usług (np. zewnętrzne API), skonfiguruj odpowiednie zmienne środowiskowe przed uruchomieniem serwera.
 
-## 🤝 Współpraca
+## Uwagi
 
-Projekt robiony **do nauki i zabawy**, bez spiny.
-Forkuj, kombinuj, ulepszaj 💪
+- Projekt został przygotowany jako demonstracja na Dni Otwarte — nie jest przeznaczony do produkcyjnego użytku bez dodatkowego hardeningu i testów.
+- Jeśli chcesz, mogę dodać plik `LICENSE` lub rozbudować instrukcję uruchomienia o opis zmiennych środowiskowych.
 
 ---
 
-**Miłego klepania kodu i powodzenia z czarnuszkiem 🖤🔥**
+Dziękujemy za zainteresowanie projektem — Damian Bukowiec i Jakub Pawecki. 🙌
 
-
-komenda
-komenda
-$body = @{ age=25; weight=75; goal='masa'; days=4; experience='średnio' ; userId = 'user12'} | ConvertTo-Json
-Invoke-RestMethod -Uri 'http://localhost:3001/api/generate-plan' -Method Post -ContentType 'application/json' -Body $body
