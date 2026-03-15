@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from "react-router-dom";
 import './plan.css';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+/*import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';*/
 
 export default function Plan() {
+    const [spiner, setSpiner] = useState(false);
     const [name, setName] = useState('');
     const [sex, setSex] = useState('');
     const [weight, setWeight] = useState('');
@@ -18,18 +19,34 @@ export default function Plan() {
     const [healt, setHealth] = useState('');
     const [exercises, setExercises] = useState('');
     const [isLocked, setIsLocked] = useState(false);
-    const [pdflock, setPdflock] = useState(true);
+    //const [pdflock, setPdflock] = useState(true);
+    
 
     const [plan, setPlan] = useState([]);
     const [dietPlan, setDietPlan] = useState([]);
     const [dietTotals, setDietTotals] = useState({ calories: 0, protein: 0, carbs: 0, fat: 0 });
 
 
-        // --- REF do prawej kolumny ---
-        //tak
+        useEffect(() => {
+        if (spiner) {
+            document.body.classList.add("no-scroll");
+            console.log("Spiner: " + spiner);
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        } else {
+            document.body.classList.remove("no-scroll");
+            console.log("Spiner: " + spiner);
+        }
+
+        return () => document.body.classList.remove("no-scroll");
+        }, [spiner]);
+
+
     const rightColRef = useRef();
 
-    // --- Funkcja generująca PDF ---
+    /* --- Funkcja generująca PDF ---
         const generatePDF = async () => {
             if (!rightColRef.current) {
                 alert("Kolumna nie jest jeszcze wyrenderowana!");
@@ -38,7 +55,7 @@ export default function Plan() {
 
             rightColRef.current.classList.add("pdf-mode");
 
-            const pdf = new jsPDF("p", "mm", "a4");
+            const pdf = new jsPDF("p", "mm", "a4"); 
             const margin = 15;
             const pdfWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
             const pxPerMm = 3.78;
@@ -98,8 +115,9 @@ export default function Plan() {
                 rightColRef.current.classList.remove("pdf-mode");
             }
         };
-
+*/
 const handleSubmit = async (e) => {
+    setSpiner(true)
     e.preventDefault();
     setIsLocked(true);
     localStorage.clear();
@@ -156,7 +174,10 @@ const handleSubmit = async (e) => {
             }
         );
 
-        if (!dietResponse.ok) throw new Error("Błąd planu dietetycznego");
+        if (!dietResponse.ok){
+            setSpiner(false);
+            throw new Error("Błąd planu dietetycznego");
+        } 
 
         const dietData = await dietResponse.json();
         console.log("Raw dietData:", dietData);
@@ -187,6 +208,7 @@ const handleSubmit = async (e) => {
             carbs: parsedMealPlan.totalCarbs || 0,
             fat: parsedMealPlan.totalFat || 0
         }));
+        
 
         // 🔹 przerwa 2s między requestami
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -222,14 +244,21 @@ const handleSubmit = async (e) => {
     } catch (err) {
         console.error("Błąd:", err);
         alert("Wystąpił błąd podczas generowania planu.");
+        setSpiner(false)
     } finally {
         setIsLocked(false);
-        setPdflock(false);
+        //setPdflock(false);
+        setSpiner(false)
     }
 };
-
+ 
     return (
             <div className="generate-container">
+                {spiner && (
+                <div className="plan-loader-wrapper">
+                    <div className="spinner"></div>
+                </div>
+                )}
             <h2 className="title-plan">Wygeneruj plan treningowy i dietetyczny</h2>
             <div className='plan-linia'></div>
 
@@ -295,9 +324,9 @@ const handleSubmit = async (e) => {
 
                     <button type="submit" disabled={isLocked}>Wygeneruj plan</button>
                     <NavLink to="/" className="btn-backtohome">Wróć do strony głównej</NavLink>
-                    <button type="button" onClick={generatePDF} disabled={pdflock}>
+                    {/*<button type="button" onClick={generatePDF} disabled={pdflock}>
                         Pobierz PDF
-                    </button>
+                    </button> */}
                 </form>
                 </div>
 
@@ -352,8 +381,8 @@ const handleSubmit = async (e) => {
                         <tbody>
                         {dietPlan.map((meal, idx) => (
                             <tr key={idx} >
-                            <td>{meal.meal} g</td>
-                            <td>{meal.calories} g</td>
+                            <td>{meal.meal} </td>
+                            <td>{meal.calories} kcal</td>
                             <td>{meal.protein} g</td>
                             <td>{meal.carbs} g</td>
                             <td>{meal.fat} g</td>
@@ -368,10 +397,10 @@ const handleSubmit = async (e) => {
                         ))}
                         <tr className="diet-total">
                             <td>SUMA</td>
-                            <td>{dietTotals.calories}</td>
-                            <td>{dietTotals.protein}</td>
-                            <td>{dietTotals.carbs}</td>
-                            <td>{dietTotals.fat}</td>
+                            <td>{dietTotals.calories} kcal</td>
+                            <td>{dietTotals.protein} g</td>
+                            <td>{dietTotals.carbs} g</td>
+                            <td>{dietTotals.fat} g</td>
                             <td></td>
                         </tr>
                         </tbody>
@@ -383,6 +412,6 @@ const handleSubmit = async (e) => {
 
                 </div>
             </div>
-            </div>
+            </div> 
     );
 }
