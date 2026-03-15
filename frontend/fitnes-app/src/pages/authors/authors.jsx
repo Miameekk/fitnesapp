@@ -18,6 +18,9 @@ export default function Authors() {
             atrakcyjny design, animacje i dobrą pracę aplikacji na telefonach oraz
             dużych ekranach.
           </p>
+          <a href="https://miiamek.pl" className="portfoliolink" target="_blank" rel="noopener noreferrer">
+            Zobacz portfolio
+          </a>
         </article>
         <article className="author-card">
           <img src="/jakup.png" alt="Jakub Pławecki" className="author-avatar"/>
@@ -27,6 +30,9 @@ export default function Authors() {
             Autor backendu: logika generowania planów, przetwarzanie danych oraz
             API. Jakub zapewnił stabilność oraz poprawną obsługę modeli AI.
           </p>
+          <a href="https://beznicku.pl" className="portfoliolink" target="_blank" rel="noopener noreferrer">
+            Zobacz portfolio
+          </a>
         </article>
       </section>
     </div>
