@@ -188,19 +188,21 @@
 
 .coming-soon {
   margin-top: 1.7rem;
-  font-size: 7px;
-  margin-left: 18rem;
   font-size: 0.8rem;
-  padding: 5px 10px; 
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
   background-color: var(--bg);
   border: 2px solid var(--accent);
   color: #fff;
   border-radius: 5px;
   text-align: center;
   font-weight: bold;
-  text-align: center;
   animation: pulse 3s ease-out infinite;
-
+  max-width: 100%;
 }
 
 @keyframes pulse {
@@ -273,8 +275,9 @@
   max-width: 100%;
   height: auto;
 }
-.about-button{  
+.about-button {
   background: var(--accent);
+  display: inline-block;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -282,11 +285,12 @@
   text-decoration: none;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: transform 0.2s ease-in-out;
   animation: fadein 1.5s ease-out forwards;
 }
+
 .about-button:hover {
-  background: var(--accent-dark);
+  transform: translateY(-3px);
 }
 
 .bmi-overlay {
@@ -308,3 +312,26 @@
     flex-direction: column-reverse;
   }
 }
+
+@media (max-width: 768px) {
+  .hero { padding: 3rem 0.75rem; }
+  .hero h1 { font-size: 1.8rem; }
+  .hero p { font-size: 1rem; }
+  .features { flex-direction: column; }
+  .feature { min-height: auto; width: 100%; max-width: 100%; margin: 0.3rem 0; padding: 1.2rem; }
+  .about { flex-direction: column; padding: 1rem; }
+  .about-text h2 { font-size: 2rem; }
+  .about-image { transform: scale(0.9); }
+}
+
+@media (min-width: 1400px) {
+  .hero { padding: 8rem 1.5rem; }
+  .hero h1 { font-size: 4rem; }
+  .hero p { font-size: 1.4rem; }
+  .features { gap: 1.5rem; }
+  .feature { min-height: 260px; }
+}
+
+
+.about-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 0.8rem; }
+

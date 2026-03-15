@@ -21,9 +21,9 @@ export default function Footer() {
         </div>
 
         <div className="footer__socials">
-          <a href="#" aria-label="Twitter"><ion-icon name="logo-twitter"></ion-icon></a>
-          <a href="#" aria-label="GitHub"><ion-icon name="logo-github"></ion-icon></a>
-          <a href="#" aria-label="LinkedIn"><ion-icon name="logo-linkedin"></ion-icon></a>
+          <a href="https://discord.gg/soonqwe" aria-label="Discord" target="_blank"><ion-icon name="logo-discord"></ion-icon></a>
+          <a href="https://github.com/Miameekk/fitnesapp" target="_blank" aria-label="GitHub"><ion-icon name="logo-github"></ion-icon></a>
+          <a href="https://instagram.com/wstawic co sie chce" aria-label="Instagram" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a>
         </div>
       </div>
 

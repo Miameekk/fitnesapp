@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';*/
 
 export default function Plan() {
     const [spiner, setSpiner] = useState(false);
+    const noapi = useState(true);
     const [name, setName] = useState('');
     const [sex, setSex] = useState('');
     const [weight, setWeight] = useState('');
@@ -28,20 +29,17 @@ export default function Plan() {
 
 
         useEffect(() => {
-        if (spiner) {
-            document.body.classList.add("no-scroll");
-            console.log("Spiner: " + spiner);
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        } else {
-            document.body.classList.remove("no-scroll");
-            console.log("Spiner: " + spiner);
-        }
 
-        return () => document.body.classList.remove("no-scroll");
-        }, [spiner]);
+            if (spiner || noapi) {
+                document.body.classList.add("no-scroll");
+                window.scrollTo(0, 0);
+            } else {
+                document.body.classList.remove("no-scroll");
+            }
+
+            return () => document.body.classList.remove("no-scroll");
+
+        }, [spiner, noapi]);
 
 
     const rightColRef = useRef();
@@ -254,6 +252,15 @@ const handleSubmit = async (e) => {
  
     return (
             <div className="generate-container">
+                {noapi && (
+                    <div className="no-api-overlay">
+                        <div className="no-api-message">
+                            <h2>Brak połączenia z API</h2>
+                            <p>Nie można połączyć się z serwerem.<br></br><strong>ERROR: 404</strong></p>
+                            <NavLink to="/">Wróć do strony głównej</NavLink>
+                        </div>
+                    </div>
+                )}
                 {spiner && (
                 <div className="plan-loader-wrapper">
                     <div className="spinner"></div>

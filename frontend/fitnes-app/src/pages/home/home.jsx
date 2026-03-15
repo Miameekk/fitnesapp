@@ -75,7 +75,7 @@ export default function Home() {
           <ion-icon name="restaurant-outline" className="icon" />
           <h2>Porady żywieniowe</h2>
           <p>Zdrowe przepisy i wskazówki.</p>
-          <span className="coming-soon">Coming soon</span>
+          <NavLink to="/generate-plan" className="link-btn">Rozpocznij</NavLink>
         </div>
         <div className="feature">
           <ion-icon name="analytics-outline" className="icon" />
@@ -98,7 +98,12 @@ export default function Home() {
             cele treningowe. Niezależnie od poziomu zaawansowania, znajdziesz tu
             inspirację i wsparcie. Trenerzy i społeczność wspierają każdy krok.
           </p>
-          <NavLink to="/generate-plan" className="about-button">Zacznij już teraz!</NavLink>
+          <div className="about-actions">
+            <NavLink to="/generate-plan" className="about-button">Zacznij już teraz!</NavLink>
+            <NavLink to="/autors" className="about-button" style={{ marginLeft: '10px', backgroundColor: 'transparent', border: '2px solid var(--accent)', color: 'var(--accent)', textDecoration: 'none', display: 'inline-block' }}>
+              Poznaj autorów
+            </NavLink>
+          </div>
         </div>
         <div className="about-image">
           <img src="/trener.png" alt="Trener" />
