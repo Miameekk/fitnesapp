@@ -1,4 +1,4 @@
-# 🎉 FitnesApp — aplikacja fitness
+# 🎉 FitnessApp — aplikacja fitness
 
 Wesoły projekt aplikacji fitness przygotowany na potrzeby Dni Otwartych. 💪🥗
 
