@@ -5,7 +5,7 @@ import './plan.css';
 import html2canvas from 'html2canvas';*/
 
 export default function Plan() {
-    const noapi = false;
+    const noapi = true;
     const [spiner, setSpiner] = useState(false);
     const [name, setName] = useState('');
     const [sex, setSex] = useState('');
