@@ -1,3 +1,4 @@
+import QRCode from "react-qr-code";
 import "./authors.css";
 
 export default function Authors() {
@@ -21,6 +22,7 @@ export default function Authors() {
           <a href="https://miiamek.pl" className="portfoliolink" target="_blank" rel="noopener noreferrer">
             Zobacz portfolio
           </a>
+          <QRCode className="qrcode" value="https://miiamek.pl" />
         </article>
         <article className="author-card">
           <img src="/jakup.png" alt="Jakub Pławecki" className="author-avatar"/>
@@ -33,6 +35,7 @@ export default function Authors() {
           <a href="https://beznicku.pl" className="portfoliolink" target="_blank" rel="noopener noreferrer">
             Zobacz portfolio
           </a>
+          <QRCode className="qrcode" value="https://beznicku.pl" />
         </article>
       </section>
     </div>
