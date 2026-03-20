@@ -5,8 +5,8 @@ import './plan.css';
 import html2canvas from 'html2canvas';*/
 
 export default function Plan() {
+    const noapi = false;
     const [spiner, setSpiner] = useState(false);
-    const noapi = useState(true);
     const [name, setName] = useState('');
     const [sex, setSex] = useState('');
     const [weight, setWeight] = useState('');
@@ -124,6 +124,7 @@ const handleSubmit = async (e) => {
     if (!weight || !age || !goal || !days || !experience) {
         alert("Wypełnij wszystkie wymagane pola!");
         setIsLocked(false);
+        setSpiner(false);
         return;
     }
 
